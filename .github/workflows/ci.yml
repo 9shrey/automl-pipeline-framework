@@ -1,0 +1,26 @@
+name: ci
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  lint-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+        with:
+          enable-cache: true
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+      - name: Install
+        run: uv pip install --system -e ".[dev]"
+      - name: Lint
+        run: |
+          ruff check src tests
+          mypy src/automl
+      - name: Unit tests
+        run: pytest -q --cov=automl --cov-report=xml

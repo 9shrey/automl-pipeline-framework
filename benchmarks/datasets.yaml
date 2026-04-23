@@ -1,0 +1,12 @@
+# OpenML task ids used by `make benchmark-fast` / `make benchmark-full`.
+# TODO: populate with curated tabular tasks (mix of small + medium).
+fast:
+  - { name: "iris",        openml_task_id: 59 }
+  - { name: "wine",        openml_task_id: 187 }
+  - { name: "breast_w",    openml_task_id: 15 }
+full:
+  - { name: "iris",        openml_task_id: 59 }
+  - { name: "wine",        openml_task_id: 187 }
+  - { name: "breast_w",    openml_task_id: 15 }
+  - { name: "adult",       openml_task_id: 7592 }
+  - { name: "credit-g",    openml_task_id: 31 }

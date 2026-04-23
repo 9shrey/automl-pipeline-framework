@@ -1,0 +1,48 @@
+# CI-friendly tiny budget — used by `make test-integration` and `make benchmark-fast`.
+task: "classification"
+target: "y"
+time_budget_seconds: 60
+n_trials: 15
+seed: 42
+n_jobs: 1
+
+cv:
+  scheme: "stratified_kfold"
+  n_splits: 3
+  shuffle: true
+
+search:
+  sampler: "tpe"
+  pruner: "asha"
+  warm_start:
+    enabled: false
+    top_k_neighbors: 3
+    min_overlap_meta_features: 0.5
+  space:
+    imputation: ["mean", "median"]
+    encoding:   ["onehot", "ordinal"]
+    scaling:    ["standard", "none"]
+    feature_selection: ["none", "variance"]
+    models:     ["logreg", "histgb"]
+
+ensembling:
+  enabled: true
+  strategy: "voting"
+  top_k: 3
+  diversity: "random"
+  meta_learner: "logreg"
+
+explain:
+  enabled: false
+  shap_max_samples: 200
+  permutation_repeats: 3
+
+run:
+  out_dir: "runs"
+  mlflow:
+    enabled: false
+    tracking_uri: "file:./mlruns"
+
+meta_store:
+  path: ".automl_meta.sqlite"
+  enabled: false

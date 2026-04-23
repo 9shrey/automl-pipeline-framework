@@ -1,0 +1,19 @@
+name: benchmark
+
+on:
+  schedule:
+    - cron: "0 3 * * *"
+  workflow_dispatch:
+
+jobs:
+  benchmark:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v3
+      - name: Set up Python 3.11
+        run: uv python install 3.11
+      - name: Install
+        run: uv pip install --system -e ".[dev,openml]"
+      - name: Run fast benchmark
+        run: python benchmarks/run_benchmark.py --config configs/fast.yaml
