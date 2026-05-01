@@ -43,17 +43,13 @@ def write_importance_report(
         p = out_dir / "permutation_importance.csv"
         permutation.to_csv(p, index=False)
         written["permutation"] = p
-        sections.append("## Permutation importance (top {n})\n\n{tbl}\n".format(
-            n=top_n, tbl=_df_to_markdown(permutation.head(top_n))
-        ))
+        sections.append(f"## Permutation importance (top {top_n})\n\n{_df_to_markdown(permutation.head(top_n))}\n")
 
     if shap is not None and not shap.empty:
         p = out_dir / "shap_importance.csv"
         shap.to_csv(p, index=False)
         written["shap"] = p
-        sections.append("## SHAP importance (top {n})\n\n{tbl}\n".format(
-            n=top_n, tbl=_df_to_markdown(shap.head(top_n))
-        ))
+        sections.append(f"## SHAP importance (top {top_n})\n\n{_df_to_markdown(shap.head(top_n))}\n")
 
     if len(sections) == 1:
         sections.append("_no importance signals were produced._\n")

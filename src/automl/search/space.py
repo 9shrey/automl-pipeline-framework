@@ -87,7 +87,7 @@ class RandomSampler:
     def __init__(self, seed: int | None = None) -> None:
         self._rng = random.Random(seed)
 
-    def suggest_categorical(self, name: str, choices: Sequence[Any]) -> Any:  # noqa: ARG002
+    def suggest_categorical(self, name: str, choices: Sequence[Any]) -> Any:
         if not choices:
             raise ValueError(f"Categorical '{name}' has no choices.")
         return self._rng.choice(list(choices))
@@ -131,7 +131,7 @@ class RandomSampler:
             if low <= 0:
                 raise ValueError(f"Int '{name}': log scale requires low > 0 (got {low}).")
             value = math.exp(self._rng.uniform(math.log(low), math.log(high)))
-            return int(round(value))
+            return round(value)
         n_steps = (high - low) // step
         return low + self._rng.randint(0, n_steps) * step
 
@@ -178,7 +178,7 @@ class Float(SpaceNode):
         if self.log and self.step is not None:
             raise ValueError(f"Float '{self.name}': log and step are mutually exclusive.")
 
-    def sample(self, sampler: Sampler, current: Mapping[str, Any]) -> Mapping[str, Any]:  # noqa: ARG002
+    def sample(self, sampler: Sampler, current: Mapping[str, Any]) -> Mapping[str, Any]:
         value = sampler.suggest_float(self.name, self.low, self.high, log=self.log, step=self.step)
         return {self.name: value}
 
@@ -204,7 +204,7 @@ class Int(SpaceNode):
         if self.log and self.step != 1:
             raise ValueError(f"Int '{self.name}': log and step != 1 are mutually exclusive.")
 
-    def sample(self, sampler: Sampler, current: Mapping[str, Any]) -> Mapping[str, Any]:  # noqa: ARG002
+    def sample(self, sampler: Sampler, current: Mapping[str, Any]) -> Mapping[str, Any]:
         value = sampler.suggest_int(self.name, self.low, self.high, log=self.log, step=self.step)
         return {self.name: value}
 
@@ -225,7 +225,7 @@ class Categorical(SpaceNode):
         object.__setattr__(self, "name", name)
         object.__setattr__(self, "choices", choices_t)
 
-    def sample(self, sampler: Sampler, current: Mapping[str, Any]) -> Mapping[str, Any]:  # noqa: ARG002
+    def sample(self, sampler: Sampler, current: Mapping[str, Any]) -> Mapping[str, Any]:
         return {self.name: sampler.suggest_categorical(self.name, self.choices)}
 
     def parameter_names(self) -> tuple[str, ...]:

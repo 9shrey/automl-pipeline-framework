@@ -111,7 +111,7 @@ def _forest_space(prefix: str) -> SearchSpace:
 def _forest_kwargs(prefix: str, params: dict[str, Any]) -> dict[str, Any]:
     return {
         "n_estimators": params.get(f"{prefix}_n_estimators", 100),
-        "max_depth": params.get(f"{prefix}_max_depth", None),
+        "max_depth": params.get(f"{prefix}_max_depth"),
         "min_samples_split": params.get(f"{prefix}_min_samples_split", 2),
         "min_samples_leaf": params.get(f"{prefix}_min_samples_leaf", 1),
         "max_features": params.get(f"{prefix}_max_features", "sqrt"),
@@ -193,7 +193,7 @@ class HistGB(EstimatorAdapter):
             "learning_rate": params.get("histgb_learning_rate", 0.1),
             "max_iter": params.get("histgb_max_iter", 100),
             "max_leaf_nodes": params.get("histgb_max_leaf_nodes", 31),
-            "max_depth": params.get("histgb_max_depth", None),
+            "max_depth": params.get("histgb_max_depth"),
             "min_samples_leaf": params.get("histgb_min_samples_leaf", 20),
             "l2_regularization": params.get("histgb_l2_regularization", 0.0),
         }

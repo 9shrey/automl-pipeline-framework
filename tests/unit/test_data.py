@@ -8,7 +8,6 @@ import pytest
 
 from automl.data import hash_array, hash_dataframe, hash_xy, infer_schema
 
-
 # ---------------------------------------------------------------------------
 # infer_schema
 # ---------------------------------------------------------------------------

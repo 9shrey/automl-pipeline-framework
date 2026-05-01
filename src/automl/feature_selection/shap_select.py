@@ -6,8 +6,6 @@ computes mean ``|SHAP|`` per feature, and keeps the top ``k``.
 
 from __future__ import annotations
 
-from typing import Any
-
 import numpy as np
 from sklearn.base import BaseEstimator, TransformerMixin
 
@@ -46,7 +44,7 @@ class ShapSelector(BaseEstimator, TransformerMixin):
         if self.k == "all":
             keep = n_features
         elif isinstance(self.k, float):
-            keep = max(1, int(round(self.k * n_features)))
+            keep = max(1, round(self.k * n_features))
         else:
             keep = max(1, min(int(self.k), n_features))
         order = np.argsort(importances)[::-1]

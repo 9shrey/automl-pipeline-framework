@@ -27,10 +27,12 @@ import pandas as pd
 from sklearn.base import BaseEstimator, ClassifierMixin, RegressorMixin
 from sklearn.utils.validation import check_is_fitted
 
+# Register the built-in sklearn adapters for API/CLI users.
+import automl.models.sklearn_models  # noqa: F401
 from automl.config.loader import check_runtime_deps, load_config, load_config_from_path
 from automl.config.schema import AutoMLConfig
 from automl.data.schema_infer import infer_schema
-from automl.runs.recorder import RunArtifacts, RunRecorder
+from automl.runs.recorder import RunRecorder
 from automl.search.engine import run_search
 
 __all__ = ["AutoMLClassifier", "AutoMLRegressor", "load_pipeline"]
@@ -120,7 +122,7 @@ class _AutoMLBase(BaseEstimator):
     # ------------------------------------------------------------------
     # sklearn API
     # ------------------------------------------------------------------
-    def fit(self, X: Any, y: Any) -> "_AutoMLBase":
+    def fit(self, X: Any, y: Any) -> _AutoMLBase:
         cfg = self._resolved_config()
         check_runtime_deps(cfg)
 
@@ -142,7 +144,7 @@ class _AutoMLBase(BaseEstimator):
                         meta, task=cfg.task, k=cfg.search.warm_start.top_k_neighbors
                     )
                 warm_params = [r.params for r in nbrs]
-            except Exception:  # noqa: BLE001 - meta store is best-effort
+            except Exception:
                 warm_params = []
 
         t0 = time.perf_counter()
@@ -208,7 +210,7 @@ class _AutoMLBase(BaseEstimator):
             best_trial=result.best_trial,
             metric_name=result.metric_name,
             best_score=best_score,
-            n_trials_completed=int(len(result.leaderboard)),
+            n_trials_completed=len(result.leaderboard),
             wall_time_seconds=wall,
         )
 
@@ -226,7 +228,7 @@ class _AutoMLBase(BaseEstimator):
                     out_dir=artifacts.run_dir,
                     seed=cfg.seed,
                 )
-            except Exception:  # noqa: BLE001
+            except Exception:
                 explain_paths = {}
 
         # Record back to the meta-store after success.
@@ -242,7 +244,7 @@ class _AutoMLBase(BaseEstimator):
                         meta=meta,
                         params=best_params,
                     )
-            except Exception:  # noqa: BLE001
+            except Exception:
                 pass
 
         # Public fitted attributes.

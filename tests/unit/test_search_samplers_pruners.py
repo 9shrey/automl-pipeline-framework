@@ -10,10 +10,11 @@ from optuna.pruners import (
     NopPruner,
     SuccessiveHalvingPruner,
 )
-from optuna.samplers import CmaEsSampler, RandomSampler as OptunaRandomSampler, TPESampler
+from optuna.samplers import CmaEsSampler, TPESampler
+from optuna.samplers import RandomSampler as OptunaRandomSampler
 
-from automl.search.samplers import OptunaSampler, build_sampler
 from automl.search.pruners import build_pruner
+from automl.search.samplers import OptunaSampler, build_sampler
 from automl.search.space import Categorical, Float, Int, SearchSpace
 
 

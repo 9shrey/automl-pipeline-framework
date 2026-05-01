@@ -23,8 +23,8 @@ coverage.xml
 *.executed.ipynb
 
 # AutoML artifacts
-runs/
-mlruns/
+/runs/
+/mlruns/
 .automl_meta.sqlite
 *.joblib
 

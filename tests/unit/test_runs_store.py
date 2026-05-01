@@ -61,7 +61,7 @@ def test_list_runs_missing_dir_returns_empty(tmp_path):
 
 
 def test_load_run_returns_full_artifacts(trained):
-    auto, X, y, _ = trained
+    auto, X, _y, _ = trained
     info = load_run(auto.run_dir_)
     assert set(info) == {"run_dir", "config", "dataset", "best_trial", "leaderboard", "pipeline"}
     assert isinstance(info["leaderboard"], pd.DataFrame)

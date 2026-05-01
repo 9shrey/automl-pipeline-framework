@@ -7,9 +7,9 @@ from automl.preprocessing.scalers import SCALERS, build_scaler
 
 __all__ = [
     "ENCODERS",
-    "FrequencyEncoder",
     "IMPUTERS",
     "SCALERS",
+    "FrequencyEncoder",
     "build_encoder",
     "build_imputer",
     "build_preprocessor",
