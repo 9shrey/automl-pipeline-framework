@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="420" viewBox="0 0 960 420" role="img" aria-label="AutoML benchmark artifact dashboard">
+  <rect width="960" height="420" fill="#f8fafc"/>
+  <text x="40" y="54" fill="#111827" font-family="Arial" font-size="28" font-weight="700">AutoML benchmark artifacts</text>
+  <rect x="40" y="88" width="880" height="270" rx="10" fill="#ffffff" stroke="#cbd5e1"/>
+  <text x="72" y="134" fill="#334155" font-family="Arial" font-size="18" font-weight="700">Pipeline</text>
+  <text x="430" y="134" fill="#334155" font-family="Arial" font-size="18" font-weight="700">Task</text>
+  <text x="590" y="134" fill="#334155" font-family="Arial" font-size="18" font-weight="700">Test metric</text>
+  <text x="760" y="134" fill="#334155" font-family="Arial" font-size="18" font-weight="700">Artifacts</text>
+  <line x1="72" y1="154" x2="888" y2="154" stroke="#cbd5e1"/>
+  <g font-family="Arial" font-size="16" fill="#0f172a">
+    <text x="72" y="198">AutoML stacked ensemble</text><text x="430" y="198">classification</text><text x="590" y="198">accuracy</text><text x="760" y="198">leaderboard.csv</text>
+    <text x="72" y="246">AutoML blended ensemble</text><text x="430" y="246">regression</text><text x="590" y="246">RMSE</text><text x="760" y="246">run_card.md</text>
+    <text x="72" y="294">ASHA pruning trace</text><text x="430" y="294">search</text><text x="590" y="294">partial CV</text><text x="760" y="294">pruning_trace.json</text>
+  </g>
+</svg>

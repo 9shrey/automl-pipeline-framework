@@ -1,0 +1,37 @@
+[
+  {
+    "trial": 0,
+    "model": "ridge",
+    "epoch": 1,
+    "score": 0.811,
+    "decision": "continue"
+  },
+  {
+    "trial": 1,
+    "model": "random_forest",
+    "epoch": 1,
+    "score": 0.827,
+    "decision": "continue"
+  },
+  {
+    "trial": 2,
+    "model": "svm",
+    "epoch": 1,
+    "score": 0.742,
+    "decision": "prune"
+  },
+  {
+    "trial": 3,
+    "model": "logreg",
+    "epoch": 1,
+    "score": 0.819,
+    "decision": "continue"
+  },
+  {
+    "trial": 4,
+    "model": "knn",
+    "epoch": 1,
+    "score": 0.721,
+    "decision": "prune"
+  }
+]
