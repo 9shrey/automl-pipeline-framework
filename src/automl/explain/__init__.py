@@ -52,7 +52,7 @@ def explain_pipeline(
             n_repeats=config.permutation_repeats,
             seed=seed,
         )
-    except Exception:  # noqa: BLE001 - best-effort
+    except Exception:
         perm_df = None
 
     if shap_available():
@@ -62,7 +62,7 @@ def explain_pipeline(
                 max_samples=config.shap_max_samples,
                 seed=seed,
             )
-        except Exception:  # noqa: BLE001
+        except Exception:
             shap_df = None
 
     return write_importance_report(out_dir=out_dir, permutation=perm_df, shap=shap_df)

@@ -13,7 +13,7 @@ __version__ = "0.1.0"
 # NOTE: api module is a stub at scaffold stage; concrete implementations land
 # in subsequent commits per the Working Agreement.
 try:
-    from automl.api import AutoMLClassifier, AutoMLRegressor  # noqa: F401
+    from automl.api import AutoMLClassifier, AutoMLRegressor
 except Exception:  # pragma: no cover - scaffold tolerance
     AutoMLClassifier = None  # type: ignore[assignment]
     AutoMLRegressor = None  # type: ignore[assignment]

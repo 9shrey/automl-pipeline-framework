@@ -4,7 +4,6 @@ from __future__ import annotations
 
 import optuna
 import pandas as pd
-import pytest
 from sklearn.datasets import make_classification, make_regression
 
 from automl.api import AutoMLClassifier
@@ -127,7 +126,7 @@ def test_api_records_to_meta_store(tmp_path):
     X_arr, y = make_classification(n_samples=80, n_features=4, random_state=0)
     X = pd.DataFrame(X_arr, columns=[f"f{i}" for i in range(4)])
     cfg = _cfg_with_meta(tmp_path)
-    auto = AutoMLClassifier(config=cfg).fit(X, y)
+    AutoMLClassifier(config=cfg).fit(X, y)
     # Meta store should have one record now.
     with MetaStore(cfg["meta_store"]["path"]) as store:
         recs = store.all(task="classification")

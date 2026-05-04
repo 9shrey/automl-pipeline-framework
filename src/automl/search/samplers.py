@@ -17,8 +17,10 @@ import optuna
 from optuna.samplers import (
     BaseSampler,
     CmaEsSampler,
-    RandomSampler as OptunaRandomSampler,
     TPESampler,
+)
+from optuna.samplers import (
+    RandomSampler as OptunaRandomSampler,
 )
 
 from automl.config.schema import SamplerName

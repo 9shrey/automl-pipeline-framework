@@ -7,7 +7,7 @@ from typing import Any
 import numpy as np
 import pandas as pd
 
-__all__ = ["shap_feature_importance", "shap_available"]
+__all__ = ["shap_available", "shap_feature_importance"]
 
 
 def shap_available() -> bool:

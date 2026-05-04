@@ -5,7 +5,7 @@ from __future__ import annotations
 import json
 import sqlite3
 from dataclasses import dataclass
-from datetime import datetime, timezone
+from datetime import UTC, datetime
 from pathlib import Path
 from typing import Any
 
@@ -47,7 +47,7 @@ class MetaStore:
     def close(self) -> None:
         self._conn.close()
 
-    def __enter__(self) -> "MetaStore":
+    def __enter__(self) -> MetaStore:
         return self
 
     def __exit__(self, *args: Any) -> None:
@@ -66,7 +66,7 @@ class MetaStore:
             "INSERT INTO runs (created_at, task, metric, score, meta_features_json, params_json) "
             "VALUES (?, ?, ?, ?, ?, ?)",
             (
-                datetime.now(timezone.utc).isoformat(timespec="seconds"),
+                datetime.now(UTC).isoformat(timespec="seconds"),
                 task,
                 metric,
                 float(score),

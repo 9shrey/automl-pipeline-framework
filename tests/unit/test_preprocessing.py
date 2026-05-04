@@ -9,10 +9,9 @@ from sklearn.compose import ColumnTransformer
 
 from automl.data import infer_schema
 from automl.preprocessing import (
-    ENCODERS,
-    FrequencyEncoder,
     IMPUTERS,
     SCALERS,
+    FrequencyEncoder,
     build_encoder,
     build_imputer,
     build_preprocessor,

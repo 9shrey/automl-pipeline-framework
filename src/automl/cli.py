@@ -14,7 +14,7 @@ All commands are thin wrappers around :mod:`automl.api` and :mod:`automl.runs.st
 from __future__ import annotations
 
 from pathlib import Path
-from typing import Optional
+from typing import Annotated
 
 import pandas as pd
 import typer
@@ -39,10 +39,12 @@ def _read_data(path: Path, target: str | None) -> tuple[pd.DataFrame, pd.Series 
 
 @app.command()
 def fit(
-    config: Path = typer.Option(..., "--config", "-c", exists=True, readable=True),
-    data: Path = typer.Option(..., "--data", "-d", exists=True, readable=True),
-    target: Optional[str] = typer.Option(None, "--target", "-t", help="Override target column name."),
-    out: Optional[Path] = typer.Option(None, "--out", "-o", help="Override out_dir."),
+    config: Annotated[Path, typer.Option("--config", "-c", exists=True, readable=True)],
+    data: Annotated[Path, typer.Option("--data", "-d", exists=True, readable=True)],
+    target: Annotated[
+        str | None, typer.Option("--target", "-t", help="Override target column name.")
+    ] = None,
+    out: Annotated[Path | None, typer.Option("--out", "-o", help="Override out_dir.")] = None,
 ) -> None:
     """Fit AutoML on ``data`` using ``config`` and write a run directory."""
     cfg = load_config_from_path(config)
@@ -60,9 +62,9 @@ def fit(
 
 @app.command()
 def score(
-    run: Path = typer.Option(..., "--run", "-r", exists=True, file_okay=False),
-    data: Path = typer.Option(..., "--data", "-d", exists=True, readable=True),
-    target: str = typer.Option(..., "--target", "-t"),
+    run: Annotated[Path, typer.Option("--run", "-r", exists=True, file_okay=False)],
+    data: Annotated[Path, typer.Option("--data", "-d", exists=True, readable=True)],
+    target: Annotated[str, typer.Option("--target", "-t")],
 ) -> None:
     """Score a saved run against a labeled dataset."""
     pipeline = load_pipeline_from_run(run)
@@ -73,12 +75,13 @@ def score(
 
 @app.command()
 def predict(
-    run: Path = typer.Option(..., "--run", "-r", exists=True, file_okay=False),
-    data: Path = typer.Option(..., "--data", "-d", exists=True, readable=True),
-    out: Path = typer.Option(..., "--out", "-o"),
-    target: Optional[str] = typer.Option(
-        None, "--target", "-t", help="Drop this column from data before predicting."
-    ),
+    run: Annotated[Path, typer.Option("--run", "-r", exists=True, file_okay=False)],
+    data: Annotated[Path, typer.Option("--data", "-d", exists=True, readable=True)],
+    out: Annotated[Path, typer.Option("--out", "-o")],
+    target: Annotated[
+        str | None,
+        typer.Option("--target", "-t", help="Drop this column from data before predicting."),
+    ] = None,
 ) -> None:
     """Predict with a saved run and write a CSV with a 'prediction' column."""
     pipeline = load_pipeline_from_run(run)
@@ -91,8 +94,8 @@ def predict(
 
 @app.command()
 def leaderboard(
-    run: Path = typer.Option(..., "--run", "-r", exists=True, file_okay=False),
-    top: int = typer.Option(10, "--top", "-n", min=1),
+    run: Annotated[Path, typer.Option("--run", "-r", exists=True, file_okay=False)],
+    top: Annotated[int, typer.Option("--top", "-n", min=1)] = 10,
 ) -> None:
     """Print the top-N rows of a run's leaderboard."""
     info = load_run(run)
@@ -102,7 +105,7 @@ def leaderboard(
 
 @app.command()
 def runs(
-    out_dir: Path = typer.Option(Path("runs"), "--out-dir", "-o"),
+    out_dir: Annotated[Path, typer.Option("--out-dir", "-o")] = Path("runs"),
 ) -> None:
     """List all runs under ``out_dir`` (newest first)."""
     handles = list_runs(out_dir)

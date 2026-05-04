@@ -11,8 +11,8 @@ Adding a new model is one file:
 
 from __future__ import annotations
 
-from collections.abc import Iterator
-from typing import Callable, TypeVar
+from collections.abc import Callable, Iterator
+from typing import ClassVar, TypeVar
 
 from automl.models.base import EstimatorAdapter, Task
 
@@ -24,7 +24,7 @@ A = TypeVar("A", bound=EstimatorAdapter)
 class EstimatorRegistry:
     """Singleton-style registry mapping name → adapter instance."""
 
-    _registry: dict[str, EstimatorAdapter] = {}
+    _registry: ClassVar[dict[str, EstimatorAdapter]] = {}
 
     @classmethod
     def register(cls, name: str, adapter: EstimatorAdapter) -> None:

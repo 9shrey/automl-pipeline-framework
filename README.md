@@ -1,5 +1,10 @@
 # AutoML Pipeline Framework
 
+[![ci](https://github.com/9shrey/automl-pipeline-framework/actions/workflows/ci.yml/badge.svg)](https://github.com/9shrey/automl-pipeline-framework/actions/workflows/ci.yml)
+[![benchmark](https://github.com/9shrey/automl-pipeline-framework/actions/workflows/benchmark.yml/badge.svg)](https://github.com/9shrey/automl-pipeline-framework/actions/workflows/benchmark.yml)
+
+![AutoML benchmark artifact dashboard](docs/assets/benchmark-dashboard.svg)
+
 A production-grade, modular **AutoML** library for tabular data. Given `(X, y, task)`, it jointly searches over preprocessing, feature selection, algorithm choice, and hyperparameters using **Bayesian optimization (Optuna / TPE)** with **ASHA pruning**, **warm-starts** from a meta-learning store of historical top configurations, **ensembles** the top-k pipelines via stacking/voting/blending, and **explains** the result with **SHAP** + permutation importance.
 
 > Status: **end-to-end working** — search → ensemble → explain → record → warm-start. 200+ unit tests, sklearn-compatible API, typer CLI. See [`MASTER_PROMPT.md`](MASTER_PROMPT.md) for the full spec.
@@ -67,7 +72,19 @@ Every `fit` creates a UTC-timestamped directory with:
 
 ## Architecture
 
-See [`docs/architecture.md`](docs/architecture.md). Core flow:
+See [`docs/architecture.md`](docs/architecture.md). Visual flow:
+
+```mermaid
+flowchart LR
+    Dataset["Dataset"] --> Preprocess["Preprocessing search"]
+    Preprocess --> Model["Model search"]
+    Model --> HPO["Optuna TPE<br/>ASHA pruning"]
+    HPO --> Ensemble["Top-k ensemble<br/>stack / vote / blend"]
+    Ensemble --> Explain["Explainability<br/>SHAP / permutation"]
+    Explain --> Artifacts["Run artifacts<br/>leaderboard, run card, hashes"]
+```
+
+Legacy text flow:
 
 ```
 User → Orchestrator → (Meta-store warm-start) → Optuna TPE + ASHA
@@ -82,6 +99,36 @@ User → Orchestrator → (Meta-store warm-start) → Optuna TPE + ASHA
 make bootstrap          # uv venv + editable install + dev deps
 make test               # unit tests + coverage
 ```
+
+## Results & Examples
+
+Reviewer-facing examples and artifact fixtures are committed:
+
+| path | purpose |
+|---|---|
+| [`examples/quickstart_classification.py`](examples/quickstart_classification.py) | sklearn-compatible classifier example |
+| [`examples/quickstart_regression.py`](examples/quickstart_regression.py) | sklearn-compatible regressor example |
+| [`examples/reproduce_5min.py`](examples/reproduce_5min.py) | deterministic toy benchmark artifact generator |
+| [`results/benchmark_table.md`](results/benchmark_table.md) | classification/regression comparison table |
+| [`results/classification_leaderboard.csv`](results/classification_leaderboard.csv) | classification leaderboard artifact |
+| [`results/regression_leaderboard.csv`](results/regression_leaderboard.csv) | regression leaderboard artifact |
+| [`results/pruning_trace.json`](results/pruning_trace.json) | ASHA-style pruning trace fixture |
+
+## Reproduce in 5 Minutes
+
+```bash
+python examples/reproduce_5min.py
+```
+
+This regenerates the committed `results/` files without external datasets. For the full package path, run `make bootstrap`, then `pytest` and `python benchmarks/run_benchmark.py --config configs/fast.yaml`.
+
+## Limitations
+
+- This is not a drop-in replacement for AutoGluon, H2O, or auto-sklearn.
+- Current scope is tabular data; there is no deep learning, NLP, CV, or time-series search space.
+- The committed `results/` benchmark is a deterministic toy fixture, not broad OpenML coverage.
+- XGBoost, LightGBM, CatBoost, and SHAP increase install weight and may be optional in constrained environments.
+- Warm-start quality depends on the size and relevance of the local meta-learning store.
 
 ## Keywords
 

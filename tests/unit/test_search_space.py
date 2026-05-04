@@ -15,7 +15,6 @@ from automl.search.space import (
     SearchSpace,
 )
 
-
 # ---------------------------------------------------------------------------
 # Leaf primitives
 # ---------------------------------------------------------------------------
@@ -34,7 +33,7 @@ class TestFloat:
             Float("x", 0.0, 1.0, log=True)
 
     def test_low_must_not_exceed_high(self) -> None:
-        with pytest.raises(ValueError, match="low .* > high"):
+        with pytest.raises(ValueError, match=r"low .* > high"):
             Float("x", 1.0, 0.0)
 
     def test_log_and_step_mutually_exclusive(self) -> None:

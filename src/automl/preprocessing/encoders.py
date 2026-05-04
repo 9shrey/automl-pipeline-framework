@@ -34,7 +34,7 @@ class FrequencyEncoder(BaseEstimator, TransformerMixin):
             unique, counts = np.unique(col.astype(str), return_counts=True)
             total = float(counts.sum()) or 1.0
             self.frequencies_.append(
-                {str(u): float(c) / total for u, c in zip(unique, counts)}
+                {str(u): float(c) / total for u, c in zip(unique, counts, strict=True)}
             )
         return self
 

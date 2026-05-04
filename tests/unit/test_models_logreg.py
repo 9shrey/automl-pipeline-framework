@@ -11,7 +11,6 @@ from automl.models import EstimatorAdapter, EstimatorRegistry, register_estimato
 from automl.models.sklearn_models import LogReg  # noqa: F401  (registers "logreg")
 from automl.search.space import RandomSampler, SearchSpace
 
-
 # ---------------------------------------------------------------------------
 # ABC contract
 # ---------------------------------------------------------------------------
@@ -56,10 +55,10 @@ class TestRegistry:
         class Toy(EstimatorAdapter):
             supports_classification = True
 
-            def search_space(self, task):  # noqa: ARG002
+            def search_space(self, task):
                 return SearchSpace([])
 
-            def build(self, task, params):  # noqa: ARG002
+            def build(self, task, params):
                 return LogisticRegression()
 
         try:
@@ -77,10 +76,10 @@ class TestRegistry:
             class Dupe(EstimatorAdapter):  # pragma: no cover - registration fails
                 supports_classification = True
 
-                def search_space(self, task):  # noqa: ARG002
+                def search_space(self, task):
                     return SearchSpace([])
 
-                def build(self, task, params):  # noqa: ARG002
+                def build(self, task, params):
                     return LogisticRegression()
 
     def test_empty_name_rejected(self) -> None:

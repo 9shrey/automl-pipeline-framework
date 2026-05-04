@@ -52,7 +52,7 @@ def compute_meta_features(
     y_arr = np.asarray(y)
     if task == "classification":
         classes, counts = np.unique(y_arr, return_counts=True)
-        n_classes = int(len(classes))
+        n_classes = len(classes)
         if n_classes > 1:
             p = counts / counts.sum()
             entropy = float(-np.sum(p * np.log(p)))

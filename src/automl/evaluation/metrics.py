@@ -6,8 +6,9 @@ for minimization metrics so Optuna can always maximize.
 
 from __future__ import annotations
 
+from collections.abc import Callable
 from dataclasses import dataclass
-from typing import Any, Callable, Literal
+from typing import Any, Literal
 
 import numpy as np
 from sklearn.metrics import (
