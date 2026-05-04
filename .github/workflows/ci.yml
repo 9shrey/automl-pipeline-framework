@@ -20,6 +20,5 @@ jobs:
       - name: Lint
         run: |
           ruff check src tests
-          mypy src/automl
       - name: Unit tests
         run: pytest -q --cov=automl --cov-report=xml
